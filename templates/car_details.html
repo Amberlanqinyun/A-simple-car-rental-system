@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block title %}Car Details{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Car Details</h1>
+    <p>Car Model: {{ car['CarModel'] }}</p>
+    <p>Registration Number: {{ car['RegistrationNumber'] }}</p>
+    <!-- Include other car details here -->
+</div>
+{% endblock %}

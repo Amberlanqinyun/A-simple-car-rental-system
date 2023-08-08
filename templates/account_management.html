@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+
+{% block title %}Account Management{% endblock %}
+
+{% block content %}
+    {% for message in get_flashed_messages(category_filter=['success']) %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        <div class="section">
+            <h2>Account Management</h2>
+            <!-- Add Customer Section -->
+            <h2>Add Customer</h2>
+            <form method="post" action="/account_management">
+                <input type="hidden" name="action" value="add_customer">
+                <div class="form-group">
+                    <label for="customer_name">Customer Name:</label>
+                    <input type="text" name="customer_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" name="phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Customer</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <!-- Search form -->
+            <h2>Search</h2>
+            <form method="post" action="/account_management">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control search-input" placeholder="Search customer or staff" name="search_query">
+                    <button class="btn btn-outline-primary" type="submit" name="action" value="search">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="section">
+            <!-- Customers table -->
+            <h2>Customers</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.CustomerID }}</td>
+                        <td>
+                            <form method="post" action="/account_management">
+                                <input type="hidden" name="action" value="update_customer">
+                                <input type="hidden" name="customer_id" value="{{ customer.CustomerID }}">
+                                <input type="text" name="customer_name" value="{{ customer.CustomerName }}" required>
+                        </td>
+                        <td>
+                            <input type="email" name="email" value="{{ customer.Email }}" required>
+                        </td>
+                        <td>
+                            <input type="text" name="address" value="{{ customer.Address }}" required>
+                        </td>
+                        <td>
+                            <input type="text" name="phone" value="{{ customer.PhoneNumber }}" required>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-info btn-sm">Save</button>
+                            </form>
+                            <form method="post" action="/account_management">
+                                <input type="hidden" name="action" value="delete_customer">
+                                <input type="hidden" name="customer_id" value="{{ customer.CustomerID }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if user_role == 'admin' %}
+        <div class="section">
+            <!-- Staff Members table -->
+            <h2>Staff Members</h2>
+            <!-- Add Staff Section -->
+            <h2>Add Staff</h2>
+            <form method="post" action="/account_management">
+                <input type="hidden" name="action" value="add_staff">
+                <div class="form-group">
+                    <label for="staff_name">Staff Name:</label>
+                    <input type="text" name="staff_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" name="phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Staff</button>
+            </form>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Staff Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff_member in staff_members %}
+                    <tr>
+                        <td>{{ staff_member.StaffID }}</td>
+                        <td>
+                            <form method="post" action="/account_management">
+                                <input type="hidden" name="action" value="update_staff">
+                                <input type="hidden" name="staff_id" value="{{ staff_member.StaffID }}">
+                                <input type="text" name="staff_name" value="{{ staff_member.StaffName }}" required>
+                        </td>
+                        <td>
+                            <input type="email" name="email" value="{{ staff_member.Email }}" required>
+                        </td>
+                        <td>
+                            <input type="text" name="address" value="{{ staff_member.Address }}" required>
+                        </td>
+                        <td>
+                            <input type="text" name="phone" value="{{ staff_member.PhoneNumber }}" required>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-info btn-sm">Save</button>
+                            </form>
+                            <form method="post" action="/account_management">
+                                <input type="hidden" name="action" value="delete_staff">
+                                <input type="hidden" name="staff_id" value="{{ staff_member.StaffID }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,512 @@
+/* Import Bootstrap 4.5.0 CSS */
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css');
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", Arial, sans-serif; 
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+/* Custom Styles */
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.content h2 {
+  margin: 0;
+  padding: 25px 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.content > p,
+.content > div {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  margin: 25px 0;
+  padding: 25px;
+  border-radius: 5px;
+}
+
+.content > p table td,
+.content > div table td {
+  padding: 5px;
+}
+
+.content > p table td:first-child,
+.content > div table td:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+.content > div p {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.car-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Navbar */
+.navtop {
+  background-color: #000;
+  height: 60px;
+  width: 100%;
+  border: 0;
+}
+
+.navtop div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.navtop div h1 {
+  font-size: 24px;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.navtop div a {
+  margin-left: 20px;
+  color: #ccc;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.navtop div a i {
+  padding: 2px 8px 0 0;
+}
+
+.navtop div a:hover {
+  color: #fff;
+}
+
+body.loggedin {
+  background-color: #f9f9f9;
+}
+
+/* Login and Register Forms */
+.login,
+.register {
+  max-width: 400px;
+  background-color: #fff;
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+  margin: 100px auto;
+  padding: 20px;
+}
+
+.login h1,
+.register h1 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.login .links,
+.register .links {
+  display: flex;
+  padding: 0 15px;
+}
+
+.login .links a,
+.register .links a {
+  color: #666;
+  text-decoration: none;
+  display: inline-flex;
+  padding: 0 10px 10px 10px;
+  font-weight: bold;
+}
+
+.login .links a:hover,
+.register .links a:hover {
+  color: #333;
+}
+
+.login .links a.active,
+.register .links a.active {
+  border-bottom: 3px solid #000;
+  color: #000;
+}
+
+.login form,
+.register form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.login form label,
+.register form label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.login form input[type="password"],
+.login form input[type="text"],
+.login form input[type="email"],
+.register form input[type="password"],
+.register form input[type="text"],
+.register form input[type="email"] {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+
+.login form input[type="submit"],
+.register form input[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #000;
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.login form input[type="submit"]:hover,
+.register form input[type="submit"]:hover {
+  background-color: #111;
+}
+
+.login form select,
+.register form select {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+
+/* Profile Container */
+.profile-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+}
+
+.profile-container h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.profile-container label {
+  display: block;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-container input[type="text"],
+.profile-container input[type="email"],
+.profile-container input[type="password"] {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+
+.profile-container button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #000;
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.profile-container button:hover {
+  background-color: #111;
+}
+
+/* Tab Styles */
+.nav-tabs {
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+}
+
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  color: #333;
+}
+
+.nav-tabs .nav-link.active {
+  border-color: #ccc #ccc #fff;
+  background-color: #fff;
+}
+
+/* Car Container and Item Styles */
+.car-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.car-item {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.car-item h3 {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.car-item p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+/* Form Container Styles */
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-container button {
+  padding: 15px;
+  background-color: #000;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.form-container button:hover {
+  background-color: #111;
+}
+
+/* Car Details and Forms Styles */
+.car-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.car-item {
+  margin-bottom: 10px;
+}
+
+.car-image {
+  max-width: 300px;
+  height: auto;
+}
+
+.form.update-car-form,
+.form.delete-car-form {
+  margin-top: 20px;
+}
+
+.form.update-car-form label,
+.form.delete-car-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form.update-car-form input,
+.form.delete-car-form input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.form.update-car-form img {
+  max-width: 300px;
+  height: auto;
+}
+
+.form.update-car-form button,
+.form.delete-car-form button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.form.update-car-form button:hover,
+.form.delete-car-form button:hover {
+  background-color: #111;
+}
+
+/* "No cars available." message styles */
+.car-not-available {
+  color: #f00;
+  font-style: italic;
+}
+
+/* Media Queries for Responsive Design */
+/* Mobile Styles - Up to 767px */
+@media (max-width: 767px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Tablet Styles - 768px to 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Desktop Styles - 992px and above */
+@media (min-width: 992px) {
+  body {
+    font-size: 20px;
+  }
+}
+
+/* Responsive Grid */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex-basis: 100%;
+}
+
+@media (min-width: 768px) {
+  .column {
+    flex-basis: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .column {
+    flex-basis: 33.33%;
+  }
+}
+
+/* Optional: Additional styles for responsiveness */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* Custom Styles for Profile Page */
+.profile-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h2 {
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-weight: bold;
+  }
+  
+  .btn-primary {
+    background-color: #3274d6;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2868c7;
+  }
+  
+

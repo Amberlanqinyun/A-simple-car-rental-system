@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block title %}Car Details{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages(category_filter=['success']) %}
+  <div class="alert alert-success" role="alert">
+  {{ message }}
+  </div>
+{% endfor %}
+{% if role in ('admin', 'staff') %}
+  <!-- Add Car Section -->
+  <div class="form add-car-form">
+    <form id="addCarForm" method="post" action="/dashboard">
+      <input type="hidden" name="action" value="add_car">
+      <label for="car_model">Car Model:</label>
+      <input type="text" name="car_model" required><br>
+      <label for="registration_number">Registration Number:</label>
+      <input type="text" name="registration_number" required><br>
+      <label for="year">Year:</label>
+      <input type="number" name="year" required><br>
+      <label for="seating_capacity">Seating Capacity:</label>
+      <input type="number" name="seating_capacity" required><br>
+      <label for="rental_per_day">Rental Per Day:</label>
+      <input type="number" step="0.01" name="rental_per_day" required><br>
+      <label for="car_image">Car Image URL:</label>
+      <input type="text" name="car_image" required><br>
+      <button type="submit">Add New</button>
+    </form>
+  </div>
+
+{% endif %}
+
+{% if rental_cars %}
+  {% for car in rental_cars %}
+    <div class="car-container">
+      <div class="car-item">
+        <h3>{{ car['CarModel'] }}</h3>
+        <img src="{{ car['CarImage'] }}" alt="Car Image" class="car-image">
+        <p>Registration Number: {{ car['RegistrationNumber'] }}</p>
+        <p>Year: {{ car['Year'] }}</p>
+        <p>Seating Capacity: {{ car['SeatingCapacity'] }}</p>
+        <p>Rental Per Day: {{ car['RentalPerDay'] }}</p>
+      </div>
+
+      {% if role in ('admin', 'staff') %}
+        <!-- Delete and Update Car Forms for Admins and Staff -->
+
+        <div class="row">
+          <!-- Update Car Form -->
+          <div class="col-md-6">
+            <div class="form update-car-form">
+              <form method="post" action="/dashboard">
+                <input type="hidden" name="action" value="edit_car">
+                <input type="hidden" name="car_id" value="{{ car['CarID'] }}">
+                <!-- Include fields for updating car details -->
+                <label for="car_model">Car Model:</label>
+                <input type="text" name="car_model" value="{{ car['CarModel'] }}" required><br>
+                <label for="registration_number">Registration Number:</label>
+                <input type="text" name="registration_number" value="{{ car['RegistrationNumber'] }}" required><br>
+                <label for="year">Year:</label>
+                <input type="number" name="year" value="{{ car['Year'] }}" required><br>
+                <label for="seating_capacity">Seating Capacity:</label>
+                <input type="number" name="seating_capacity" value="{{ car['SeatingCapacity'] }}" required><br>
+                <label for="rental_per_day">Rental Per Day:</label>
+                <input type="number" step="0.01" name="rental_per_day" value="{{ car['RentalPerDay'] }}" required><br>
+                <label for="car_image">Car Image URL:</label>
+                <input type="text" name="car_image" value="{{ car['CarImage'] }}" required><br>
+                <button type="submit">Update</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Delete Car Form -->
+          <div class="col-md-6">
+            <div class="form delete-car-form">
+              <form method="post" action="/dashboard">
+                <input type="hidden" name="action" value="delete_car">
+                <input type="hidden" name="car_id" value="{{ car['CarID'] }}">
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No cars available.</p>
+{% endif %}
+{% endblock %}
