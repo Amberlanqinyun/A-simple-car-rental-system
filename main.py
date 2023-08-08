@@ -195,6 +195,10 @@ def profile():
                                            (username, hashed_password, email, user_id,))
                             cursor.execute('UPDATE customers SET CustomerName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
                                            (username, address, email, phone, user_id,))
+                            connection.commit()
+                            connection.close()
+                            flash('Profile updated successfully!', 'success')
+                            return render_template('profile.html', account=account, role= get_user_role())
                     else:
                         # Update the user's database without changing the password
                         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -202,8 +206,11 @@ def profile():
                                            (username, email, user_id,))
                             cursor.execute('UPDATE customers SET CustomerName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
                                            (username, address, email, phone, user_id,))
-                    connection.commit()
-                    flash('Profile updated successfully!', 'success')
+                            connection.commit()
+                            connection.close()
+                            flash('Profile updated successfully!', 'success')
+                            return render_template('profile.html', account=account, role= get_user_role())
+
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
 
@@ -236,6 +243,11 @@ def profile():
                                            (username, hashed_password, email, user_id,))
                             cursor.execute('UPDATE staff SET StaffName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
                                            (username, address, email, phone, user_id,))
+                            connection.commit()
+                            connection.close()
+                            flash('Profile updated successfully!', 'success')
+                            return render_template('profile.html', account=account, role= get_user_role())
+
                     else:
                         # Update the user's database without changing the password
                         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -243,8 +255,12 @@ def profile():
                                            (username, email, user_id,))
                             cursor.execute('UPDATE staff SET StaffName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
                                            (username, address, email, phone, user_id,))
-                    connection.commit()
-                    flash('Profile updated successfully!', 'success')
+                            connection.commit()
+                            connection.close()
+                            flash('Profile updated successfully!', 'success')
+                            return render_template('profile.html', account=account, role= get_user_role())
+
+
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
 
@@ -253,16 +269,18 @@ def profile():
             with connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 cursor.execute('SELECT CustomerName, Email, PhoneNumber, Address FROM customers WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
-            return render_template('profile.html', account=account)
-        
+                connection.close()
+                return render_template('profile.html', account=account, role= get_user_role())
+
         elif request.method == 'GET' and get_user_role() == 'staff' or get_user_role() == 'admin':
             with connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 cursor.execute('SELECT StaffName, Email, PhoneNumber, Address FROM staff WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
-            return render_template('profile.html', account=account)
+                connection.close()
+                return render_template('profile.html', account=account, role= get_user_role())
 
         connection.close()
-        return render_template('profile.html', account=account)
+        return render_template('profile.html', account=account, role=get_user_role())
 
     # User is not logged in, redirect to the login page
     return redirect(url_for('login'))

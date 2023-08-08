@@ -13,20 +13,11 @@
         {{ message }}
         </div>
     {% endfor %}
-    <div class="section">
-        <h2>Search</h2>
-        <form method="post" action="/account_management">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control search-input" placeholder="Search customer or staff" name="search_query">
-                <button type="submit" class="btn btn-primary" name="action" value="search">Search</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="container">
+   
+     <div class="container">
         <!-- Add Customer Section -->
         <div class="section">
-            <h2>Add Customer</h2>
+            <h2>Add New Customer</h2>
             <form method="post" action="/account_management">
                 <input type="hidden" name="action" value="add_customer">
                 <div class="form-group">
@@ -48,10 +39,19 @@
                 <button type="submit" class="btn btn-primary">Add Customer</button>
             </form>
         </div>
+        </div>
+        <div class="section">
+            <h2>Search</h2>
+            <form method="post" action="/account_management">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control search-input" placeholder="Search customer or staff" name="search_query">
+                    <button type="submit" class="btn btn-primary" name="action" value="search">Search</button>
+                </div>
+            </form>
+        
         <div class="container">
             <!-- Customers table -->
         <div class="section">
-            <h2>Manage Customer Accounts</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -96,10 +96,12 @@
                 </tbody>
             </table>
         </div>
+    </div>
+        </div>  
+        <div class="container">
         <div class="section">
         {% if user_role != 'staff' %}
         <!-- Staff Members table -->
-            <h2>Manage Staff Accounts</h2>
             <!-- Add Staff Section -->
             <h2>Add Staff</h2>
             <form method="post" action="/account_management">
@@ -123,7 +125,7 @@
                 <button type="submit" class="btn btn-primary">Add Staff</button>
             </form>
 
-            <div class="section">
+            <div class="container">
             <table class="table table-striped">
                 <thead>
                     <tr>

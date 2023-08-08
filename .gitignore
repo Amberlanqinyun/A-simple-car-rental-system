@@ -43,3 +43,26 @@ __pycache__/
 *.swp
 *.swo
 Deep Focus Music To Improve Concentration - 12 Hours of Ambient Study Music to Concentrate \#648 Relaxing Melody Relaxing Melody • • 3.1K views Streamed 6 days ago New.webloc
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyi
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Flask
+instance/
+
+# Jinja2
+*.pyc
+__pycache__/
+# Auto detect text files and perform LF normalization
+* text=auto

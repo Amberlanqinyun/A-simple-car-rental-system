@@ -18,16 +18,16 @@
         <h2>Update Your Profile</h2>
         <form action="{{ url_for('profile') }}" method="POST">
             <label for="username">Name:</label>
-            <input type="text" name="username" value="{{ account.CustomerName }}" required>
+            <input type="text" name="username" value="{{ account['CustomerName'] }}" >
             <br>
             <label for="email">Email:</label>
-            <input type="email" name="email" value="{{ account.Email }}" required>
+            <input type="email" name="email" value="{{ account['Email'] }}" >
             <br>
             <label for="address">Address:</label>
-            <input type="text" name="address" value="{{ account.Address }}" required>
+            <input type="text" name="address" value="{{ account['Address'] }}" >
             <br>
             <label for="phone">Phone Number:</label>
-            <input type="text" name="phone" value="{{ account.PhoneNumber }}" required>
+            <input type="text" name="phone" value="{{ account['PhoneNumber'] }}">
             <br>
             <label for="password">New Password:</label>
             <input type="password" name="password">
@@ -42,16 +42,16 @@
         <h2>Update Your Profile</h2>
         <form action="{{ url_for('profile') }}" method="POST">
             <label for="username">Name:</label>
-            <input type="text" name="username" value="{{ account.StaffName }}" required>
+            <input type="text" name="username" value="{{ account['StaffName'] }}" >
             <br>
             <label for="email">Email:</label>
-            <input type="email" name="email" value="{{ account.Email }}" required>
+            <input type="email" name="email" value="{{ account['Email'] }}" >
             <br>
             <label for="address">Address:</label>
-            <input type="text" name="address" value="{{ account.Address }}" required>
+            <input type="text" name="address" value="{{ account['Address'] }}" >
             <br>
             <label for="phone">Phone Number:</label>
-            <input type="text" name="phone" value="{{ account.PhoneNumber }}" required>
+            <input type="text" name="phone" value="{{ account['PhoneNumber'] }}" >
             <br>
             <label for="password">New Password:</label>
             <input type="password" name="password">
@@ -61,4 +61,3 @@
     </div>
     {% endif %}
 {% endblock %}
-
