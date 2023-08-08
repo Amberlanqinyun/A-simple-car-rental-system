@@ -40,8 +40,10 @@
   {% for car in rental_cars %}
     <div class="car-container">
       <div class="car-item">
-        <h3>{{ car['CarModel'] }}</h3>
-        <img src="{{ car['CarImage'] }}" alt="Car Image" class="car-image">
+        <a href="{{ url_for('car_details', car_id=car['CarID']) }}">
+          <img src="{{ car['CarImage'] }}" alt="{{ car['CarModel'] }}" class="car-image">
+          <h3>{{ car['CarModel'] }}</h3>
+        </a>        
         <p>Registration Number: {{ car['RegistrationNumber'] }}</p>
         <p>Year: {{ car['Year'] }}</p>
         <p>Seating Capacity: {{ car['SeatingCapacity'] }}</p>

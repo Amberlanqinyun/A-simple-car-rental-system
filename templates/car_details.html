@@ -7,6 +7,6 @@
     <h1>Car Details</h1>
     <p>Car Model: {{ car['CarModel'] }}</p>
     <p>Registration Number: {{ car['RegistrationNumber'] }}</p>
-    <!-- Include other car details here -->
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Return to Dashboard</a>
 </div>
 {% endblock %}

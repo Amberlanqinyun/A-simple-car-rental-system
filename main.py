@@ -135,7 +135,7 @@ def register():
                 # Account doesn't exist and the form data is valid, now insert new account into accounts table
                 hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
                 print(hashed)
-                cursor.execute('INSERT INTO users (UserName, PasswordHash, Email, Role) VALUES (%s, %s, %s, %s)', (username, hashed, email, 'staff',))
+                cursor.execute('INSERT INTO users (UserName, PasswordHash, Email, Role) VALUES (%s, %s, %s, %s)', (username, hashed, email, 'customer',))
                 user_id = cursor.lastrowid
                 cursor.execute('INSERT INTO customers (UserID,CustomerName,Email) VALUES (%s, %s, %s)', (user_id, username, email,))
                 connection.commit()
