@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS rental_cars
     Year INT NOT NULL,
     SeatingCapacity INT NOT NULL,
     RentalPerDay DECIMAL(10, 2) NOT NULL,
-    CarImage VARCHAR(200) -- Assuming the car image is stored as a URL or path
+    CarImage VARCHAR(200) 
 );
 
 
