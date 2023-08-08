@@ -14,7 +14,7 @@
                 <a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Home</a>
 				<a href="{{ url_for('profile')}}"><i class="fas fa-user-circle"></i>Profile</a>
 				<a href="{{ url_for('dashboard') }}"><i class="fas fa-cogs"></i>Dashboard</a>
-			{% if 'role' in session and session['role'] == 'admin' %}
+			{% if role in ('admin', 'staff') %}
 				<a href="{{ url_for('account_management') }}"><i class="fas fa-users-cog"></i>Account Management</a>
 			{% endif %}
 				<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>	

@@ -162,46 +162,48 @@ def home():
 # http://localhost:5000/profile - this will be the profile page, only accessible for logged-in users
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    # Check if the user is logged in
     if is_authenticated():
         user_id = session['id']
         connection = connect_db()
 
         if request.method == 'POST' and get_user_role() == "customer":
             try:
-            # Form submission for updating the customer's profile
+                # Form submission for updating the customer's profile
                 username = request.form['username']
                 email = request.form['email']
-                 # Validate the email address
-                if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-                    flash('Invalid email address!', 'danger')
-                    return redirect(url_for('profile'))
                 address = request.form['address']
                 phone = request.form['phone']
-                if not re.match(r'^\d{10}$', phone):
-                    flash('Invalid phone number! Phone number should be a 10-digit number.', 'danger')
-                    return render_template('customer_profile.html', account=account)
                 new_password = request.form.get('password')
-                if new_password and len(new_password) < 6:
+                
+                # Validate the email address
+                if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+                    flash('Invalid email address!', 'danger')
+                # Validate the phone number
+                elif not re.match(r'^\d{10}$', phone):
+                    flash('Invalid phone number! Phone number should be a 10-digit number.', 'danger')
+                # Check if the new password is at least 6 characters long
+                elif new_password and len(new_password) < 6:
                     flash('New password must be at least 6 characters long!', 'danger')
-                    return render_template('customer_profile.html', account=account)
-
-                # Check if the user entered a new password
-                if new_password:
-                    # Hash the new password before storing it
-                    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
-                    # Update the user's database
-                    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                        cursor.execute('UPDATE users SET UserName = %s, PasswordHash = %s, Email = %s WHERE UserID = %s', (username, hashed_password, email, user_id,))
-                        cursor.execute('UPDATE customers SET CustomerName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
-                                    (username, address, email, phone, user_id,))
+                else:
+                    # Check if the user entered a new password
+                    if new_password:
+                        # Hash the new password before storing it
+                        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+                        # Update the user's database
+                        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                            cursor.execute('UPDATE users SET UserName = %s, PasswordHash = %s, Email = %s WHERE UserID = %s',
+                                           (username, hashed_password, email, user_id,))
+                            cursor.execute('UPDATE customers SET CustomerName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
+                                           (username, address, email, phone, user_id,))
+                    else:
+                        # Update the user's database without changing the password
+                        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                            cursor.execute('UPDATE users SET UserName = %s, Email = %s WHERE UserID = %s',
+                                           (username, email, user_id,))
+                            cursor.execute('UPDATE customers SET CustomerName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
+                                           (username, address, email, phone, user_id,))
                     connection.commit()
                     flash('Profile updated successfully!', 'success')
-                    # Fetch the customer's profile data after the update
-                    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                        cursor.execute('SELECT CustomerName, Email, PhoneNumber, Address FROM customers WHERE UserID = %s', (user_id,))
-                        account = cursor.fetchone()
-                    return render_template('customer_profile.html', account=account)
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
 
@@ -210,55 +212,61 @@ def profile():
                 # Form submission for updating staff or admin profile
                 username = request.form['username']
                 email = request.form['email']
+                address = request.form['address']
+                phone = request.form['phone']
+                new_password = request.form.get('password')
+                
                 # Validate the email address
                 if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
                     flash('Invalid email address!', 'danger')
-                    return render_template('staff_profile.html', account=account)
-                address = request.form['address']
-                phone = request.form['phone']
-                if not re.match(r'^\d{10}$', phone):
+                # Validate the phone number
+                elif not re.match(r'^\d{10}$', phone):
                     flash('Invalid phone number! Phone number should be a 10-digit number.', 'danger')
-                    return render_template('customer_profile.html', account=account)
-                new_password = request.form.get('password')
-                if new_password and len(new_password) < 6:
+                # Check if the new password is at least 6 characters long
+                elif new_password and len(new_password) < 6:
                     flash('New password must be at least 6 characters long!', 'danger')
-                    return render_template('staff_profile.html', account=account)
-
-                # Check if the user entered a new password
-                if new_password:
-                    # Hash the new password before storing it
-                    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
-                    # Update the user's database
-                    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                        cursor.execute('UPDATE users SET UserName = %s, PasswordHash = %s, Email = %s WHERE UserID = %s', (username, hashed_password, email, user_id,))
-                        cursor.execute('UPDATE staff SET StaffName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
-                                    (username, address, email, phone, user_id,))
+                else:
+                    # Check if the user entered a new password
+                    if new_password:
+                        # Hash the new password before storing it
+                        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+                        # Update the user's database
+                        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                            cursor.execute('UPDATE users SET UserName = %s, PasswordHash = %s, Email = %s WHERE UserID = %s',
+                                           (username, hashed_password, email, user_id,))
+                            cursor.execute('UPDATE staff SET StaffName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
+                                           (username, address, email, phone, user_id,))
+                    else:
+                        # Update the user's database without changing the password
+                        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+                            cursor.execute('UPDATE users SET UserName = %s, Email = %s WHERE UserID = %s',
+                                           (username, email, user_id,))
+                            cursor.execute('UPDATE staff SET StaffName = %s, Address = %s, Email = %s, PhoneNumber = %s WHERE UserID = %s',
+                                           (username, address, email, phone, user_id,))
                     connection.commit()
                     flash('Profile updated successfully!', 'success')
-                    # Fetch the staff/admin profile data after the update
-                    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-                        cursor.execute('SELECT StaffName, Email, PhoneNumber, Address FROM staff WHERE UserID = %s', (user_id,))
-                        account = cursor.fetchone()
-                    return render_template('staff_profile.html', account=account)
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
 
-        elif request.method == 'GET' and get_user_role() == 'customer':
-            # User is logged in as a customer, show them the customer profile page
+        # Fetch the user's profile data based on their role after the update
+        if request.method == 'GET' and get_user_role() == 'customer':
             with connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 cursor.execute('SELECT CustomerName, Email, PhoneNumber, Address FROM customers WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
-            return render_template('customer_profile.html', account=account)
-
-        elif request.method == 'GET' and (get_user_role() == 'staff' or get_user_role() == 'admin'):
-            # User is logged in as staff or admin, show them the staff/admin profile page
+            return render_template('profile.html', account=account)
+        
+        elif request.method == 'GET' and get_user_role() == 'staff' or get_user_role() == 'admin':
             with connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 cursor.execute('SELECT StaffName, Email, PhoneNumber, Address FROM staff WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
-            return render_template('staff_profile.html', account=account)
+            return render_template('profile.html', account=account)
+
+        connection.close()
+        return render_template('profile.html', account=account)
 
     # User is not logged in, redirect to the login page
     return redirect(url_for('login'))
+
 
 
 @app.route('/account_management', methods=['GET', 'POST'])
@@ -447,20 +455,24 @@ def dashboard():
                 try:
                     car_model = request.form['car_model']
                     registration_number = request.form['registration_number']
+                    car_image = request.form['car_image']
                     year = int(request.form['year'])
                     seating_capacity = int(request.form['seating_capacity'])
                     rental_per_day = float(request.form['rental_per_day'])
-                    car_image = request.form['car_image']
 
-                     # Data validation for car fields
-                    if not car_model or not registration_number:
-                        raise Exception("Car model and registration number are required fields.")
+                    # Perform validation for required fields
+                    if not car_model or not car_image:
+                        raise Exception("Car model and car image are required fields.")
+
                     if year < 1900 or year > 9999:
                         raise Exception("Invalid year. Please enter a valid year between 1900 and 9999.")
+
                     if seating_capacity <= 0:
                         raise Exception("Invalid seating capacity. Please enter a value greater than 0.")
+
                     if rental_per_day <= 0:
-                        raise Exception("Invalid rental amount. Please enter a value greater than 0.")
+                        raise Exception("Invalid rental per day. Please enter a value greater than 0.")
+
                     
                     # Connect to the database
                     connection = connect_db()

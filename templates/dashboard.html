@@ -1,13 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block title %}Car Details{% endblock %}
-
 {% block content %}
-{% for message in get_flashed_messages(category_filter=['success']) %}
-  <div class="alert alert-success" role="alert">
-  {{ message }}
-  </div>
-{% endfor %}
+    {% for message in get_flashed_messages(category_filter=['success']) %}
+    <div class="alert alert-success" role="alert">
+    {{ message }}
+    </div>
+    {% endfor %}
+    {% for message in get_flashed_messages(category_filter=['danger']) %}
+    <div class="alert alert-danger" role="alert">
+    {{ message }}
+    </div>
+    {% endfor %}
+
 {% if role in ('admin', 'staff') %}
   <!-- Add Car Section -->
   <div class="form add-car-form">
@@ -70,18 +75,19 @@
               </form>
             </div>
           </div>
-
+          <p>
           <!-- Delete Car Form -->
           <div class="col-md-6">
             <div class="form delete-car-form">
               <form method="post" action="/dashboard">
                 <input type="hidden" name="action" value="delete_car">
                 <input type="hidden" name="car_id" value="{{ car['CarID'] }}">
-                <button type="submit">Delete</button>
+                <button type="submit" class="secondary-btn">Delete</button>
               </form>
             </div>
           </div>
         </div>
+      </p>
       {% endif %}
     </div>
   {% endfor %}

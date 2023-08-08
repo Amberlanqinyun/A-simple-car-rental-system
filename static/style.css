@@ -108,7 +108,7 @@ body.loggedin {
 /* Login and Register Forms */
 .login,
 .register {
-  max-width: 400px;
+  max-width: 500px;
   background-color: #fff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
   margin: 100px auto;
@@ -163,7 +163,7 @@ body.loggedin {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
+  width: 100px;
   height: 50px;
   background-color: #000;
   color: #fff;
@@ -176,13 +176,19 @@ body.loggedin {
 .register form input[type="password"],
 .register form input[type="text"],
 .register form input[type="email"] {
-  width: 100%;
+  width: 300px;
   height: 50px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
   padding: 0 15px;
 }
-
+.login form,
+.register form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+}
 .login form input[type="submit"],
 .register form input[type="submit"] {
   width: 100%;
@@ -464,49 +470,76 @@ body.loggedin {
 
 /* Custom Styles for Profile Page */
 .profile-container {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-container h2 {
-    margin: 0;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    font-weight: bold;
-  }
-  
-  .btn-primary {
-    background-color: #3274d6;
-    color: #fff;
-    border: none;
-  }
-  
-  .btn-primary:hover {
-    background-color: #2868c7;
-  }
-  
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
+.profile-container h2 {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Improved Bootstrap button styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.9); /* Slightly transparent black */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.2s, box-shadow 0.2s, color 0.2s; /* Added transition for text color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Fine-tuned the box shadow */
+  cursor: pointer; /* Added cursor pointer on hover */
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent black on hover */
+  color: #fff; /* Explicitly set the text color on hover */
+}
+
+.btn-primary {
+  background-color: rgba(0, 0, 0, 0.9); /* Slightly transparent black for primary button */
+}
+
+.btn-primary:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent black on hover for primary button */
+}
+/* Secondary Button Styles */
+.secondary-btn {
+  padding: 5px 10px; /* Adjust padding to make the button smaller */
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000; /* Black border with 2px width */
+  border-radius: 5px;
+  transition: color 0.2s; /* Transition for text color change on hover */
+}
+
+.secondary-btn:hover {
+  color: rgba(0, 0, 0, 0.8); /* Slightly transparent black on hover for text */
+}
+.divider {
+  border-top: 1px solid #ccc; /* Adjust color and width as needed */
+  margin: 10px 0; /* Adjust margin to control spacing around the divider */
+}
