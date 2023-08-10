@@ -57,7 +57,7 @@ def get_user_role():
 
 
 # http://localhost:5000/login/ - this will be the login page, we need to use both GET and POST requests
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     # Output message if something goes wrong...
     msg = ''
@@ -73,7 +73,7 @@ def login():
             # Fetch one record and return result
             account = cursor.fetchone()
         connection.close()
-
+        # If account exists in accounts table in out database
         if account is not None:
             password = account["PasswordHash"]
             if bcrypt.checkpw(user_password.encode('utf-8'), password.encode('utf-8')):
@@ -117,6 +117,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        role = request.form['role']
         # Check if account exists using MySQL
         connection = connect_db()
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -135,9 +136,12 @@ def register():
                 # Account doesn't exist and the form data is valid, now insert new account into accounts table
                 hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
                 print(hashed)
-                cursor.execute('INSERT INTO users (UserName, PasswordHash, Email, Role) VALUES (%s, %s, %s, %s)', (username, hashed, email, 'customer',))
+                cursor.execute('INSERT INTO users (UserName, PasswordHash, Email, Role) VALUES (%s, %s, %s, %s)', (username, hashed, email, role,))
                 user_id = cursor.lastrowid
-                cursor.execute('INSERT INTO customers (UserID,CustomerName,Email) VALUES (%s, %s, %s)', (user_id, username, email,))
+                if role == 'customer':
+                    cursor.execute('INSERT INTO customers (UserID, CustomerName, Email) VALUES (%s, %s, %s)', (user_id, username, email))
+                elif role in ('admin', 'staff'):
+                    cursor.execute('INSERT INTO staff (UserID, StaffName, Email) VALUES (%s, %s, %s)', (user_id, username, email))
                 connection.commit()
                 print (user_id)
                 msg = 'You have successfully registered!'
@@ -178,9 +182,6 @@ def profile():
                 # Validate the email address
                 if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
                     flash('Invalid email address!', 'danger')
-                # Validate the phone number
-                elif not re.match(r'^\d{10}$', phone):
-                    flash('Invalid phone number! Phone number should be a 10-digit number.', 'danger')
                 # Check if the new password is at least 6 characters long
                 elif new_password and len(new_password) < 6:
                     flash('New password must be at least 6 characters long!', 'danger')
@@ -198,7 +199,8 @@ def profile():
                             connection.commit()
                             connection.close()
                             flash('Profile updated successfully!', 'success')
-                            return render_template('profile.html', account=account, role= get_user_role())
+                            return redirect(url_for('profile'))
+
                     else:
                         # Update the user's database without changing the password
                         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -209,7 +211,7 @@ def profile():
                             connection.commit()
                             connection.close()
                             flash('Profile updated successfully!', 'success')
-                            return render_template('profile.html', account=account, role= get_user_role())
+                            return redirect(url_for('profile'))
 
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
@@ -246,7 +248,7 @@ def profile():
                             connection.commit()
                             connection.close()
                             flash('Profile updated successfully!', 'success')
-                            return render_template('profile.html', account=account, role= get_user_role())
+                            return redirect(url_for('profile'))
 
                     else:
                         # Update the user's database without changing the password
@@ -258,11 +260,13 @@ def profile():
                             connection.commit()
                             connection.close()
                             flash('Profile updated successfully!', 'success')
-                            return render_template('profile.html', account=account, role= get_user_role())
+                            return redirect(url_for('profile'))
+
 
 
             except Exception as e:
                 flash(f'Error updating profile: {e}', 'danger')
+                return redirect(url_for('profile'))
 
         # Fetch the user's profile data based on their role after the update
         if request.method == 'GET' and get_user_role() == 'customer':
@@ -270,17 +274,20 @@ def profile():
                 cursor.execute('SELECT CustomerName, Email, PhoneNumber, Address FROM customers WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
                 connection.close()
-                return render_template('profile.html', account=account, role= get_user_role())
+                return render_template('profile.html', account = account, role= get_user_role())
 
         elif request.method == 'GET' and get_user_role() == 'staff' or get_user_role() == 'admin':
             with connection.cursor(pymysql.cursors.DictCursor) as cursor:
                 cursor.execute('SELECT StaffName, Email, PhoneNumber, Address FROM staff WHERE UserID = %s', (user_id,))
                 account = cursor.fetchone()
                 connection.close()
-                return render_template('profile.html', account=account, role= get_user_role())
-
+                return render_template('profile.html', account = account, role= get_user_role())
+            
+            
+        
         connection.close()
-        return render_template('profile.html', account=account, role=get_user_role())
+        return redirect(url_for('profile'))
+
 
     # User is not logged in, redirect to the login page
     return redirect(url_for('login'))

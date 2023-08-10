@@ -23,9 +23,17 @@
 				</label>
 				<input type="password" name="password" placeholder="Password" id="password" required>
 				<label for="email">
-					<i class="fas fa-envelope"></i>
+					<i class="fas fa-user-shield"></i>
 				</label>
 				<input type="email" name="email" placeholder="Email" id="email" required>
+				<label for="role">
+					<i class="fas fa-user-shield"></i>
+				</label>
+				<select name="role" id="role" class="select-box">
+					<option value="customer">Customer</option>
+					<option value="staff">Staff</option>
+					<option value="admin">Admin</option>
+				</select>
 				<div class="msg">{{ msg }}</div>
 				<input type="submit" value="Register">
 			</form>
